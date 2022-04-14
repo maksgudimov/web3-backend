@@ -1,0 +1,9 @@
+html,body{
+    background-color: #DCDCDC;
+}
+form{
+    max-width: 980px;
+    margin: 0 auto;
+    justify-content: center;
+    padding-top: 30px;
+}
