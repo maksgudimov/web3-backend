@@ -1,71 +1,103 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
-    <title>Web3</title>
-</head>
-<body>
-    <form>
-        <div class="form-group">
-            <label for="validationCustom01">Name</label>
-      <input type="text" class="form-control" id="validationCustom01" placeholder="Имя" value="Mark" required>
-      <div class="valid-feedback">
-        </div>
-        <div class="form-group">
-            <label for="exampleFormControlInput1">Email address</label>
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-          </div>
-        <div class="form-group">
-            <label for="inputDate">Date</label>
-            <input type="date" class="form-control">
-          </div>
-          Gender
-          <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
-            <label class="custom-control-label" for="customRadioInline1">Man</label>
-          </div>
-          <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
-            <label class="custom-control-label" for="customRadioInline2">Woman</label>
-          </div>
-          How much hand?
-          <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
-            <label class="custom-control-label" for="customRadioInline1">2</label>
-          </div>
-          <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
-            <label class="custom-control-label" for="customRadioInline2">3</label>
-          </div>
-      
-        <div class="form-group">
-          <label for="exampleFormControlSelect2">SverchSposob</label>
-          <select multiple class="form-control" id="exampleFormControlSelect2">
-            <option>бессмертие</option>
-            <option>прохождение сквозь стены</option>
-            <option>левитация</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="exampleFormControlTextarea1">Биография</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="gridCheck1">
-            <label class="form-check-label" for="gridCheck1">
-              С контрактом ознакомлен 
-            </label>
-          </div>
-          <div class="form-group row">
-            <div class="col-sm-10">
-              <button type="submit" class="btn btn-primary">Sign in</button>
-            </div>
-          </div>
+<?php 
 
 
-</body>
-</html>
+header('Content-Type: text/html; charset=UTF-8');
+
+// В суперглобальном массиве $_SERVER PHP сохраняет некторые заголовки запроса HTTP
+// и другие сведения о клиненте и сервере, например метод текущего запроса $_SERVER['REQUEST_METHOD'].
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+  // В суперглобальном массиве $_GET PHP хранит все параметры, переданные в текущем запросе через URL.
+  if (!empty($_GET['save'])) {
+    // Если есть параметр save, то выводим сообщение пользователю.
+    print('Спасибо, результаты сохранены.');
+  }
+  // Включаем содержимое файла form.php.
+  include('form.php');
+  // Завершаем работу скрипта.
+  exit();
+}
+// Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в XML-файл.
+
+// Проверяем ошибки.
+$errors = FALSE;
+if (empty($_POST['name'])) {
+  print('Заполните имя.<br/>');
+  $errors = TRUE;
+}
+if (empty($_POST['email'])) {
+  print('Заполните mail.<br/>');
+  $errors = TRUE;
+}
+if (empty($_POST['date1'])) {
+  print('Заполните date.<br/>');
+  $errors = TRUE;
+}
+if (empty($_POST['gender'])) {
+  print('Заполните gender.<br/>');
+  $errors = TRUE;
+}
+if (empty($_POST['hand'])) {
+  print('Заполните hand.<br/>');
+  $errors = TRUE;
+}
+if (empty($_POST['select1'])) {
+  print('Заполните select.<br/>');
+  $errors = TRUE;
+}
+if (empty($_POST['biogr'])) {
+  print('Заполните biogr.<br/>');
+  $errors = TRUE;
+}
+if (empty($_POST['form-ch'])) {
+  print('Заполните ch.<br/>');
+  $errors = TRUE;
+}
+
+if ($errors) {
+  // При наличии ошибок завершаем работу скрипта.
+  exit();
+}
+
+// Сохранение в базу данных.
+
+//$user = 'u41732';
+//$pass = '9367477';
+//$dbName = 'u41732';
+
+echo 'GOOD ERRORS!1';
+$name = $_POST['name'];
+$email = $_POST['email'];
+$date = $_POST['date1'];
+$gender = $_POST['gender'];
+$hand = $_POST['hand'];
+// преобразуем данные в строку 
+
+$select12 = implode(",",$_POST['select1']);
+$biogr = $_POST['biogr'];
+$formCh = $_POST['form-ch'];
+$id = 1;
+
+// Подготовленный запрос. Не именованные метки.
+//подключение к базе данных 
+//$db = new PDO('mysql:host=localhost; dbname=$dbName, $user, $pass, array(PDO::ATTR_PERSISTENT => true)); 
+$db = new PDO('mysql:host=localhost; dbname=u41732', 'u41732', '9367477', array(PDO::ATTR_PERSISTENT => true));
+try 
+{
+ $qu = $db->prepare("INSERT INTO application SET id = ?, name = ?, email = ?,data_1 = ?,gender = ?, hand = ?, biogr = ?,formCh = ?");
+ //$query->execute(array ($_POST['name'],$_POST['email'],$_POST['date1'],$_POST['gender'],$_POST['hand'],$_POST['biogr'],$_POST['form-ch']));
+ //$query->execute(array($_POST['name'],$_POST['email'],date('d-m-y', strtotime($_POST['date1'])),$_POST['gender'],$_POST['hand'],$_POST['biogr'],$_POST['form-ch']));
+ $qu->execute([$id,$name,$email,$date,$gender,$hand,$biogr,$formCh]);
+ $id = $db->lastInsertId();
+ $qu2 = $db->prepare("INSERT INTO application2 SET id = ?,sel = ?");
+ $qu2->execute([$id, $select12]);
+ echo "Запрос отправлен!" . $id;
+
+}
+
+catch(PDOException $e)
+{
+print('Error : ' . $e->getMessage());
+exit();
+}
+
+?>
